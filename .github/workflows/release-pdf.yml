@@ -1,0 +1,47 @@
+name: Build and release PDF
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes latexmk texlive-latex-extra texlive-lang-italian biber
+
+      - name: Compile thesis
+        run: latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: thesis-pdf
+          path: build/main.pdf
+
+      - name: Publish rolling release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view latest >/dev/null 2>&1; then
+            gh release upload latest build/main.pdf --clobber
+          else
+            gh release create latest build/main.pdf \
+              --title "Latest thesis PDF" \
+              --notes "Automatically compiled from the latest push to main."
+          fi
+
+      - name: Clean generated files
+        run: latexmk -C main.tex

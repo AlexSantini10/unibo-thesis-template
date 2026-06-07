@@ -1,0 +1,70 @@
+{
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.outDir": "%DIR%/build",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk and clean",
+      "tools": [
+        "latexmk",
+        "latexmk-clean-build"
+      ]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-halt-on-error",
+        "-pdf",
+        "-outdir=%OUTDIR%",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "latexmk-clean-build",
+      "command": "latexmk",
+      "args": [
+        "-c",
+        "-bibtex-cond1",
+        "-outdir=%OUTDIR%",
+        "%DOC%"
+      ],
+      "env": {}
+    }
+  ],
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.acn",
+    "*.acr",
+    "*.alg",
+    "*.aux",
+    "*.bbl",
+    "*.bcf",
+    "*.blg",
+    "*.fdb_latexmk",
+    "*.fls",
+    "*.glg",
+    "*.glo",
+    "*.gls",
+    "*.idx",
+    "*.ilg",
+    "*.ind",
+    "*.ist",
+    "*.lof",
+    "*.log",
+    "*.lot",
+    "*.nav",
+    "*.out",
+    "*.run.xml",
+    "*.snm",
+    "*.synctex.gz",
+    "*.toc",
+    "*.vrb",
+    "*.xdv"
+  ],
+  "latex-workshop.latex.clean.subfolder.enabled": true,
+  "latex-workshop.view.pdf.viewer": "tab"
+}
