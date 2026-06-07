@@ -24,13 +24,15 @@ build/
 *.lot
 *.nav
 *.out
-*.pdf
 *.run.xml
 *.snm
 *.synctex.gz
 *.toc
 *.vrb
 *.xdv
+
+# Generated thesis PDF (PDF images inside assets remain trackable)
+/main.pdf
 
 # Temporary and backup files
 *.bak

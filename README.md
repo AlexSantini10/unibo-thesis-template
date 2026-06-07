@@ -252,15 +252,21 @@ A ogni push sul branch `main`, GitHub:
 1. installa LaTeX;
 2. compila la tesi;
 3. salva il PDF come artifact della workflow;
-4. crea o aggiorna la release `latest`;
+4. crea una nuova release identificata dalla data e dall'ora italiane;
 5. allega `main.pdf` alla release;
 6. elimina i file generati dal runner dopo la pubblicazione riuscita.
+
+Ogni push crea una release separata, per esempio
+**Versione del 07/06/2026 alle 22:30:15**. Le versioni precedenti non vengono
+sovrascritte e rimangono disponibili nella sezione **Releases**. Il tag
+corrispondente usa un formato compatibile con Git, come
+`versione-2026-06-07-22-30-15`.
 
 Per scaricare il PDF pubblicato:
 
 1. apri la pagina GitHub del repository;
 2. apri la sezione **Releases**;
-3. seleziona **Latest thesis PDF**;
+3. seleziona la versione desiderata;
 4. scarica `main.pdf`.
 
 La workflow puo anche essere avviata manualmente dalla sezione **Actions** del
@@ -277,6 +283,26 @@ Con GitHub Desktop:
 
 Terminato il push, GitHub Actions compilera e pubblichera automaticamente il
 nuovo PDF. Puoi controllare lo stato dalla sezione **Actions** del repository.
+
+## Rendere questo repository un template GitHub
+
+Questa operazione deve essere eseguita una sola volta dal proprietario del
+repository originale:
+
+1. pubblica tutti i file del progetto su GitHub;
+2. apri la pagina del repository su GitHub;
+3. seleziona **Settings**;
+4. nella sezione **General**, attiva **Template repository**.
+
+Da quel momento comparira il pulsante **Use this template**. Chi lo utilizza
+otterra una nuova repository indipendente, contenente sorgenti, configurazione
+VS Code e workflow GitHub Actions, ma senza la cronologia dei commit del
+template.
+
+Prima di rendere pubblico il template, verifica dalla pagina **Actions** che il
+workflow **Build and release PDF** sia abilitato. In organizzazioni con policy
+restrittive potrebbe essere necessario consentire al workflow il permesso di
+scrittura dei contenuti della repository.
 
 ## Struttura del progetto
 

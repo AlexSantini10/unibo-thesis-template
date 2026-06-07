@@ -31,17 +31,21 @@ jobs:
           name: thesis-pdf
           path: build/main.pdf
 
-      - name: Publish rolling release
+      - name: Create version identifiers
+        id: version
+        env:
+          TZ: Europe/Rome
+        run: |
+          echo "tag=versione-$(date '+%Y-%m-%d-%H-%M-%S')" >> "$GITHUB_OUTPUT"
+          echo "title=Versione del $(date '+%d/%m/%Y alle %H:%M:%S')" >> "$GITHUB_OUTPUT"
+
+      - name: Publish versioned release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view latest >/dev/null 2>&1; then
-            gh release upload latest build/main.pdf --clobber
-          else
-            gh release create latest build/main.pdf \
-              --title "Latest thesis PDF" \
-              --notes "Automatically compiled from the latest push to main."
-          fi
+          gh release create "${{ steps.version.outputs.tag }}" build/main.pdf \
+            --title "${{ steps.version.outputs.title }}" \
+            --notes "PDF compilato automaticamente dal commit ${{ github.sha }}."
 
       - name: Clean generated files
         run: latexmk -C main.tex
