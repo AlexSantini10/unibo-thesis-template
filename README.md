@@ -12,7 +12,7 @@ salvi un file.
 - abstract, tre capitoli di esempio, conclusioni e bibliografia;
 - cartelle separate per testi, immagini e configurazione;
 - compilazione automatica al salvataggio;
-- PDF generato in `build/main.pdf`;
+- PDF generato in `main.pdf`;
 - rimozione automatica dei file temporanei dopo una compilazione riuscita;
 - pubblicazione automatica del PDF su GitHub dopo ogni push su `main`.
 
@@ -23,14 +23,16 @@ Servono:
 1. [Visual Studio Code](https://code.visualstudio.com/);
 2. l'estensione
    [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop);
-3. una distribuzione LaTeX contenente `latexmk` e `biber`.
+3. una distribuzione LaTeX contenente `latexmk` e `biber`;
+4. [Perl](https://www.perl.org/get.html), necessario per eseguire `latexmk`.
 
 ### Windows
 
 1. Scarica e installa [MiKTeX](https://miktex.org/download).
 2. Durante l'installazione, scegli di installare automaticamente i pacchetti
    mancanti.
-3. Riavvia Visual Studio Code.
+3. Scarica e installa [Strawberry Perl](https://strawberryperl.com/).
+4. Riavvia Visual Studio Code.
 
 In alternativa, puoi installare
 [TeX Live per Windows](https://tug.org/texlive/acquire-netinstall.html).
@@ -41,7 +43,7 @@ Apri il terminale ed esegui:
 
 ```bash
 sudo apt update
-sudo apt install latexmk texlive-latex-extra texlive-lang-italian biber
+sudo apt install perl latexmk texlive-latex-extra texlive-lang-italian biber
 ```
 
 Per altre distribuzioni Linux, usa il relativo package manager oppure segui
@@ -55,6 +57,7 @@ In alternativa, con Homebrew:
 
 ```bash
 brew install --cask mactex
+brew install perl
 ```
 
 Al termine, riavvia Visual Studio Code.
@@ -85,7 +88,7 @@ Puoi scegliere uno di questi metodi:
 Il PDF si trova qui:
 
 ```text
-build/main.pdf
+main.pdf
 ```
 
 Per visualizzarlo dentro VS Code, apri la sezione LaTeX nella barra laterale e
@@ -179,9 +182,9 @@ La configurazione inclusa in `.vscode/settings.json` usa LaTeX Workshop e
 Ogni volta che salvi un file `.tex`:
 
 1. viene ricompilata l'intera tesi;
-2. viene aggiornato `build/main.pdf`;
+2. viene aggiornato `main.pdf`;
 3. dopo una compilazione riuscita, vengono eliminati i file temporanei come
-   `.aux`, `.bbl`, `.bcf` e `.log`.
+   `.aux`, `.bbl` e `.bcf`, conservando `main.log`.
 
 Se la compilazione fallisce, i file temporanei vengono conservati per aiutare a
 individuare l'errore.
