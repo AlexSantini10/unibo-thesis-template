@@ -4,7 +4,7 @@
   "latex-workshop.latex.search.rootFiles.include": [
     "main.tex"
   ],
-  "latex-workshop.latex.autoBuild.run": "onFileChange",
+  "latex-workshop.latex.autoBuild.run": "onSave",
   "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
   "latex-workshop.latex.tools": [
     {
@@ -19,13 +19,25 @@
         "-synctex=1",
         "%DOC%"
       ]
+    },
+    {
+      "name": "cleanup-successful-build",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "$base = [System.IO.Path]::Combine('%DIR%', '%DOCFILE%'); $extensions = @('.acn','.acr','.alg','.aux','.bbl','.bcf','.blg','.dvi','.fdb_latexmk','.fls','.glg','.glo','.gls','.idx','.ilg','.ind','.ist','.lof','.lot','.nav','.out','.run.xml','.snm','.synctex.gz','.toc','.vrb','.xdv'); foreach ($extension in $extensions) { $file = \"$base$extension\"; if (Test-Path -LiteralPath $file) { Remove-Item -LiteralPath $file -Force } }"
+      ]
     }
   ],
   "latex-workshop.latex.recipes": [
     {
       "name": "latexmk",
       "tools": [
-        "latexmk"
+        "latexmk",
+        "cleanup-successful-build"
       ]
     }
   ],
