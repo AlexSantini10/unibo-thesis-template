@@ -25,11 +25,14 @@ jobs:
       - name: Compile thesis
         run: latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 
+      - name: Verify generated PDF
+        run: test -s main.pdf
+
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: thesis-pdf
-          path: build/main.pdf
+          path: main.pdf
 
       - name: Create version identifiers
         id: version
@@ -43,7 +46,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${{ steps.version.outputs.tag }}" build/main.pdf \
+          gh release create "${{ steps.version.outputs.tag }}" main.pdf \
             --title "${{ steps.version.outputs.title }}" \
             --notes "PDF compilato automaticamente dal commit ${{ github.sha }}."
 
